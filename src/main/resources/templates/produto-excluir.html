@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Produto - StockLanches</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+            <div class="logo-container">
+                <i class="fa-solid fa-cart-shopping logo-icon"></i>
+                <div class="logo-text">
+                    <h1>StockLanches</h1>
+                    <p>Gestão de Estoque</p>
+                </div>
+            </div>
+
+            <div class="user-profile-card">
+                <p class="user-profile-label">Usuário Logado</p>
+                <p class="user-profile-email" th:text="${emailUsuario}">gerente@stocklanches.com</p>
+            </div>
+
+			<nav class="menu-nav">
+                <p class="menu-label">Menu Principal</p>
+                
+                <a th:href="@{/home}" class="menu-item" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+                
+                <a th:href="@{/adicionar}" class="menu-item" th:classappend="${activePage == 'adicionar'} ? 'active' : ''">
+                    <i class="fa-solid fa-plus"></i> Adicionar Produto
+                </a>
+
+                <a th:href="@{/editar}" class="menu-item" th:classappend="${activePage == 'editar'} ? 'active' : ''">
+                    <i class="fa-regular fa-pen-to-square"></i> Editar Produto
+                </a>
+                
+                <a th:href="@{/excluir}" class="menu-item" th:classappend="${activePage == 'excluir'} ? 'active' : ''">
+                    <i class="fa-solid fa-trash"></i> Excluir Produto
+                </a>
+
+                <a th:href="@{/consultar}" class="menu-item" th:classappend="${activePage == 'consultar'} ? 'active' : ''">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar Produto
+                </a>
+                
+                <a th:href="@{/historico}" class="menu-item" th:classappend="${activePage == 'historico'} ? 'active' : ''">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                </a>
+
+                <div class="menu-bottom">
+                    <p class="menu-label">Sistema</p>
+                    <a th:href="@{/logout}" class="menu-item btn-logout" 
+                       onclick="return confirm('Tem certeza que deseja sair do sistema?');">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="menu-overlay" onclick="toggleMenu()"></div>
+            <header>
+           		 <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+           		<div>
+                <h1>Excluir Produto</h1>
+                <p>Remova produtos do sistema</p>
+                </div>
+            </header>
+
+            <div style="background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 20px; display: flex; align-items: start; gap: 15px; margin-bottom: 25px;">
+                <div style="background-color: rgba(239, 68, 68, 0.2); padding: 10px; border-radius: 8px; color: #ef4444;">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 5px 0; font-size: 1rem; color: #ef4444;">Atenção: A exclusão é permanente!</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: #f8fafc; opacity: 0.8;">
+                        Certifique-se de que deseja remover o produto, pois essa ação não pode ser desfeita. O histórico de movimentações será mantido como registro.
+                    </p>
+                </div>
+            </div>
+
+            <div th:if="${mensagemSucesso}" style="padding: 1rem; background-color: rgba(34, 197, 94, 0.2); color: #22c55e; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid rgba(34, 197, 94, 0.3);">
+                <i class="fa-solid fa-check-circle"></i> <span th:text="${mensagemSucesso}"></span>
+            </div>
+            <div th:if="${mensagemErro}" style="padding: 1rem; background-color: rgba(239, 68, 68, 0.2); color: #ef4444; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid rgba(239, 68, 68, 0.3);">
+                <i class="fa-solid fa-circle-exclamation"></i> <span th:text="${mensagemErro}"></span>
+            </div>
+
+            <div class="content-box">
+                
+                <div class="form-row" style="align-items: flex-end; gap: 20px;">
+                    
+                    <form th:action="@{/excluir}" method="get" class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label>Escolher Produto da Lista</label>
+                        <div style="display: flex; gap: 10px;">
+                            <select name="busca" class="form-select" onchange="this.form.submit()">
+                                <option value="" selected>Selecione um produto...</option>
+                                <option th:each="p : ${produtos}" 
+                                        th:value="${p.nome}" 
+                                        th:text="${p.nome} + ' (Qtd: ' + ${p.quantidade} + ')'">
+                                    X-Burger (Qtd: 10)
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <form th:action="@{/excluir}" method="get" class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label>Ou Buscar Digitando</label>
+                        <div style="position: relative;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 15px; top: 12px; color: var(--color-text-secondary);"></i>
+                            <input type="text" name="busca" th:value="${buscaAtual}" placeholder="Digite e pressione Enter..." 
+                                   style="width: 100%; padding: 10px 10px 10px 40px; background-color: var(--bg-dark-main); border: 1px solid var(--border-color-dark); border-radius: 6px; color: white;">
+                        </div>
+                    </form>
+
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border-color-dark); margin: 20px 0;">
+
+                <div class="product-delete-list">
+                    
+                    <div th:if="${produtos.empty}" style="padding: 30px; text-align: center; color: var(--color-text-secondary);">
+                        <i class="fa-regular fa-folder-open" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+                        <p>Nenhum produto encontrado.</p>
+                    </div>
+
+                    <div th:each="produto : ${produtos}" 
+                         style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color-dark);">
+                        
+                        <div>
+                            <span style="font-size: 1rem; font-weight: bold; display: block; margin-bottom: 4px;" th:text="${produto.nome}">Nome do Produto</span>
+                            <div style="font-size: 0.85rem; color: var(--color-text-secondary); display: flex; gap: 10px; align-items: center;">
+                                <span style="background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px;" th:text="${produto.categoria}">Categoria</span>
+                                <span>•</span>
+                                <span th:text="${produto.quantidade} + ' unid.'">0 unid.</span>
+                                <span>•</span>
+                                <span th:text="'R$ ' + ${#numbers.formatDecimal(produto.precoVenda, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</span>
+                            </div>
+                        </div>
+                        
+                        <form th:action="@{/excluir/remover}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este produto permanentemente?');" style="margin: 0;">
+                            <input type="hidden" name="id" th:value="${produto.id}" />
+                            <button type="submit" 
+                                    style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-trash-can"></i> Excluir
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+	<script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>

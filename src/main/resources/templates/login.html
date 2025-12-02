@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Estoque - Login</title>
+    
+    <link rel="stylesheet" th:href="@{css/global.css}">
+    <link rel="stylesheet" th:href="@{css/login.css}">
+</head>
+<body class="auth-page">
+
+    <div class="auth-card login-card-split">
+
+        <div class="auth-image-section">
+            <img th:src="@{/images/login-memphis.jpg}" alt="Ilustração de login" />
+        </div>
+
+        <div class="auth-form-section">
+
+            <h1 class="auth-title">StockLanches</h1>
+            <p class="auth-subtitle">Sistema de Gestão de Estoque</p>
+            
+            <div th:if="${cadastrado != null and cadastrado.equals('true')}" class="message-box message-success">
+                <span>Usuário cadastrado com sucesso! Faça login para continuar.</span>
+            </div>
+            
+            <div th:if="${erro != null and erro.equals('true')}" class="message-box message-error">
+                <span>Email ou senha incorretos. Tente novamente.</span>
+            </div>
+
+            <form method="POST" th:action="@{/login}">
+                
+                <label for="email" class="input-label">Email</label>
+                <div class="input-container">
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" class="input-field" required>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                </div>
+
+                <label for="senha" class="input-label">Senha</label>
+                <div class="input-container" style="margin-bottom: 25px;">
+                    <input type="password" id="senha" name="senha" placeholder="Sua senha" class="input-field" required>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="input-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2h2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2h1zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+
+                <button type="submit" class="btn-primary">Entrar no Sistema</button>
+            </form>
+
+            <div class="action-links">
+                <a th:href="@{/cadastro}" class="auth-link">
+                    Não tem uma conta? <strong>Cadastre-se</strong>
+                </a>
+                <div class="link-separator">
+                    <a href="#" class="auth-link">Esqueci minha senha</a>
+                </div>
+            </div>
+
+        </div> 
+    </div>
+
+</body>
+</html>

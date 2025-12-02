@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico - StockLanches</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/historico.css}">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+            <div class="logo-container">
+                <i class="fa-solid fa-cart-shopping logo-icon"></i>
+                <div class="logo-text">
+                    <h1>StockLanches</h1>
+                    <p>Gestão de Estoque</p>
+                </div>
+            </div>
+
+            <div class="user-profile-card">
+                <p class="user-profile-label">Usuário Logado</p>
+                <p class="user-profile-email" th:text="${emailUsuario}">gerente@stocklanches.com</p>
+            </div>
+
+			<nav class="menu-nav">
+                <p class="menu-label">Menu Principal</p>
+                
+                <a th:href="@{/home}" class="menu-item" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+                
+                <a th:href="@{/adicionar}" class="menu-item" th:classappend="${activePage == 'adicionar'} ? 'active' : ''">
+                    <i class="fa-solid fa-plus"></i> Adicionar Produto
+                </a>
+
+                <a th:href="@{/editar}" class="menu-item" th:classappend="${activePage == 'editar'} ? 'active' : ''">
+                    <i class="fa-regular fa-pen-to-square"></i> Editar Produto
+                </a>
+                
+                <a th:href="@{/excluir}" class="menu-item" th:classappend="${activePage == 'excluir'} ? 'active' : ''">
+                    <i class="fa-solid fa-trash"></i> Excluir Produto
+                </a>
+
+                <a th:href="@{/consultar}" class="menu-item" th:classappend="${activePage == 'consultar'} ? 'active' : ''">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar Produto
+                </a>
+                
+                <a th:href="@{/historico}" class="menu-item" th:classappend="${activePage == 'historico'} ? 'active' : ''">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                </a>
+
+                <div class="menu-bottom">
+                    <p class="menu-label">Sistema</p>
+                    <a th:href="@{/logout}" class="menu-item btn-logout" 
+                       onclick="return confirm('Tem certeza que deseja sair do sistema?');">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="menu-overlay" onclick="toggleMenu()"></div>
+            <header>
+           		 <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div>
+                <h1>Histórico de Transações</h1>
+                <p>Acompanhe todas as movimentações de estoque</p>
+                </div>
+            </header>
+
+            <form th:action="@{/historico}" method="get" class="filter-bar">
+                <div class="filter-group">
+                    <label class="filter-label">Tipo de Transação</label>
+                    <select name="tipoFiltro" class="filter-select"> 
+                        <option value="Todas">Todas</option>
+                        <option value="Entrada">Entrada</option>
+                        <option value="Saída">Saída</option>
+                        <option value="Edição">Edição</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Data Inicial</label>
+                    <input type="date" class="filter-input">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Data Final</label>
+                    <input type="date" class="filter-input">
+                </div>
+                <button type="submit" class="btn-filter">Filtrar</button>
+            </form>
+
+            <div class="timeline-container">
+               <div class="timeline">
+                    
+                    <div th:if="${historicoLogs.empty}" style="padding: 20px; text-align: center; color: #888;">
+                        <p>Nenhuma movimentação registrada ainda.</p>
+                    </div>
+
+                    <div th:each="log : ${historicoLogs}" class="timeline-item">
+                        
+                        <div th:if="${log.tipo == 'Entrada'}" class="timeline-icon icon-entry">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </div>
+
+                        <div th:if="${log.tipo == 'Saída'}" class="timeline-icon icon-exit">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </div>
+
+                        <div th:if="${log.tipo == 'Edição'}" class="timeline-icon" style="background-color: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 2px solid var(--bg-dark-card);">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+
+                        <div class="timeline-content">
+                            <div class="transaction-info">
+                                <h4 th:text="${log.tipo} + ' - ' + ${log.nomeProduto}"
+                                    th:style="${log.tipo == 'Entrada' ? 'color: var(--color-accent-green)' : (log.tipo == 'Saída' ? 'color: var(--color-accent-red)' : 'color: var(--color-accent-blue)')}">
+                                    Tipo - Produto
+                                </h4>
+                                <p th:text="'Quantidade: ' + ${log.quantidade} + ' unidades'">Quantidade: 0</p>
+                            </div>
+                            <div class="transaction-meta">
+                                <div class="meta-time">
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span th:text="${log.dataFormatada}">00/00/0000 00:00</span>
+                                </div>
+                                <span class="meta-user" th:text="'Por: ' + ${log.usuarioResponsavel}">Por: Usuário</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+	<script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>
