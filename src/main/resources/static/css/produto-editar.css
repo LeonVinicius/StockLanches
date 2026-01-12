@@ -1,0 +1,61 @@
+
+.section-card {
+    background-color: var(--bg-dark-card);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color-dark);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--border-color-dark);
+    padding-bottom: 0.75rem;
+}
+
+/* Barra de Busca (Estilo similar ao Consultar, mas dentro do card) */
+.search-container {
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    background-color: var(--bg-dark-main);
+    border: 1px solid var(--border-color-dark);
+    border-radius: 8px;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--color-accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+/* Botão Específico para Salvar (Cor Laranja/Amarelo da imagem) */
+.btn-warning {
+    background-color: var(--color-accent-orange);
+    color: white;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #ea580c; /* Um tom mais escuro de laranja */
+    transform: translateY(-1px);
+}

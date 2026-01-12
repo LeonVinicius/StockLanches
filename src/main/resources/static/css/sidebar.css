@@ -1,0 +1,373 @@
+
+:root {
+    --bg-dark-main: #0f172a;      
+    --bg-dark-sidebar: #020617;   
+    --bg-dark-card: #1e293b;      
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #94a3b8;
+    --border-color-dark: #334155;
+    
+
+    --color-accent-blue: #3b82f6; 
+    --color-accent-purple: #a855f7;
+    --color-accent-green: #22c55e;
+    --color-accent-orange: #f97316;
+    --color-accent-red: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+body, html {
+    height: 100%;
+    width: 100vw;
+    background-color: var(--bg-dark-main);
+    color: var(--color-text-primary);
+    overflow: hidden; 
+}
+
+/* Layout Principal Grid */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr; /* Sidebar fixa, resto fluido */
+    height: 100vh;
+    width: 100%;
+}
+
+/* =========================================
+   2. SIDEBAR (MENU LATERAL)
+   ========================================= */
+.sidebar {
+    background-color: var(--bg-dark-sidebar);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color-dark);
+    height: 100%;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.logo-container { display: flex; align-items: center; margin-bottom: 2rem; gap: 10px; }
+.logo-icon { font-size: 1.5rem; color: var(--color-accent-blue); }
+.logo-text h1 { font-size: 1.2rem; font-weight: 700; margin: 0; }
+.logo-text p { font-size: 0.75rem; color: var(--color-text-secondary); margin: 0; }
+
+.user-profile-card {
+    background-color: var(--bg-dark-card);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color-dark);
+}
+.user-profile-label { font-size: 0.75rem; color: var(--color-text-secondary); }
+.user-profile-email { font-size: 0.85rem; font-weight: 500; word-break: break-all; }
+
+.menu-nav { display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+.menu-label {
+    font-size: 0.75rem; font-weight: 600; color: var(--color-text-secondary);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; margin-top: 1rem;
+}
+
+.menu-item {
+    display: flex; align-items: center; padding: 0.75rem 1rem;
+    text-decoration: none; color: var(--color-text-secondary);
+    border-radius: 8px; transition: all 0.2s; font-weight: 500; font-size: 0.95rem;
+}
+.menu-item i { margin-right: 10px; width: 20px; text-align: center; }
+
+.menu-item:hover, .menu-item.active {
+    background-color: var(--bg-dark-card); color: #fff;
+}
+.menu-item.active { border-left: 3px solid var(--color-accent-blue); }
+
+.menu-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-logout {
+    color: var(--color-accent-red) !important;
+    transition: 0.3s;
+}
+.btn-logout:hover {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* =========================================
+   3. ÁREA DE CONTEÚDO PRINCIPAL
+   ========================================= */
+.main-content {
+    padding: 2rem;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.main-content header, 
+.header-title {
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center; /* Alinha botão mobile e título */
+}
+
+.main-content header h1, 
+.main-content header h2,
+.header-title h2 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.main-content header p,
+.header-title p {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* =========================================
+   4. COMPONENTES: FORMULÁRIOS E INPUTS
+   ========================================= */
+.form-container, .content-box, .section-card {
+    background-color: var(--bg-dark-card);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color-dark);
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color-dark);
+    padding-bottom: 10px;
+}
+
+.form-row, .form-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-grid-3col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label, .form-label, .filter-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* INPUTS GERAIS */
+input[type="text"], input[type="number"], input[type="date"],
+input[type="password"], input[type="email"],
+select, textarea,
+.form-input, .form-select, .form-textarea, .search-input, .filter-input, .filter-select {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--bg-dark-main) !important;
+    border: 1px solid var(--border-color-dark) !important;
+    border-radius: 8px;
+    color: white !important;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-accent-blue) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-field::placeholder {
+    font-size: 0.75rem;
+    color: #a0aec0;
+    opacity: 1;
+}
+
+/* BOTÕES */
+button, .btn {
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.2s;
+}
+
+.btn-submit, .btn-primary, .btn-filter {
+    background-color: var(--color-accent-blue);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.btn-submit:hover, .btn-filter:hover { filter: brightness(1.1); }
+
+/* =========================================
+   5. TABELAS
+   ========================================= */
+.stock-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.stock-table th {
+    background-color: rgba(255, 255, 255, 0.02);
+    padding: 15px 20px;
+    text-align: left;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color-dark);
+    white-space: nowrap;
+}
+
+.stock-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color-dark);
+    color: var(--color-text-primary);
+    vertical-align: middle;
+}
+
+.stock-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Coluna ID menorzinha */
+.stock-table th:first-child, .stock-table td:first-child {
+    width: 60px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* =========================================
+   6. OVERLAYS E MODALS (CORREÇÃO TELA ESCURA)
+   ========================================= */
+
+/* Fundo do Menu Mobile - INVISÍVEL POR PADRÃO */
+.menu-overlay {
+    display: none !important; /* Importante: Garante que não apareça no Desktop */
+}
+
+/* Fundo do Modal de Detalhes - INVISÍVEL POR PADRÃO */
+.modal-overlay-details {
+    display: none; /* JS vai mudar para flex */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+/* Estilo da caixa do modal */
+.modal-box {
+    background-color: var(--bg-dark-card);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color-dark);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal-header { padding: 20px; border-bottom: 1px solid var(--border-color-dark); display: flex; justify-content: space-between; align-items: center; }
+.modal-header h3 { margin: 0; color: white; display: flex; align-items: center; gap: 10px; }
+.btn-close-modal { background: none; border: none; color: var(--color-text-secondary); font-size: 1.5rem; cursor: pointer; }
+.modal-body { padding: 20px; }
+.detail-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.detail-label { color: var(--color-text-secondary); }
+.detail-value { color: white; font-weight: 600; text-align: right; }
+.modal-footer { padding: 15px 20px; border-top: 1px solid var(--border-color-dark); text-align: right; background-color: rgba(0,0,0,0.2); border-radius: 0 0 12px 12px; }
+
+/* =========================================
+   7. RESPONSIVIDADE (MOBILE < 768px)
+   ========================================= */
+
+/* Botão de menu invisível no Desktop */
+.mobile-menu-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /* Layout vira uma coluna */
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow-x: hidden;
+    }
+
+    /* Sidebar escondida */
+    .sidebar {
+        position: fixed;
+        top: 0; left: 0;
+        width: 260px; height: 100vh;
+        z-index: 1000;
+        background-color: var(--bg-dark-sidebar);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+
+    /* Mostrar sidebar quando ativa */
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Fundo escuro SÓ aparece no mobile E quando ativo */
+    .menu-overlay.active {
+        display: block !important;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+
+    /* Botão de menu visível */
+    .mobile-menu-btn {
+        display: block;
+        background: none; border: none;
+        color: white; font-size: 1.5rem;
+        cursor: pointer; margin-right: 15px;
+    }
+
+    /* Ajustes de Grid para mobile */
+    .cards-grid, .charts-area, .form-row, .form-grid-2col, .form-grid-3col {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Rolagem na tabela */
+    .content-box, .table-container {
+        overflow-x: auto;
+        padding: 15px;
+    }
+    .stock-table { min-width: 600px; }
+
+    /* Filtros empilhados */
+    .filter-bar { flex-direction: column; align-items: stretch; }
+    .filter-group, .btn-filter, .btn-submit { width: 100%; margin-bottom: 10px; }
+}

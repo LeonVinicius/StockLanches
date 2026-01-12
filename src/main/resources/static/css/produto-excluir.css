@@ -1,0 +1,132 @@
+
+.danger-alert {
+    background-color: rgba(239, 68, 68, 0.1); 
+    border: 1px solid var(--color-accent-red);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    color: var(--color-accent-red);
+}
+
+.danger-icon {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.danger-content h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.danger-content p {
+    margin: 0;
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+/* Container da Lista de Exclusão (Card principal) */
+.delete-list-container {
+    background-color: var(--bg-dark-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color-dark);
+}
+
+/* Barra de Busca dentro do card */
+.search-bar-delete {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.search-input-delete {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    background-color: var(--bg-dark-main);
+    border: 1px solid var(--border-color-dark);
+    border-radius: 8px;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+}
+
+.search-input-delete:focus {
+    outline: none;
+    border-color: var(--color-accent-red); /* Foco vermelho nesta tela */
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* Lista de Produtos para Excluir */
+.product-delete-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.product-delete-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: var(--bg-dark-main); /* Fundo mais escuro para cada item */
+    border: 1px solid var(--border-color-dark);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+}
+
+.product-delete-item:hover {
+    border-color: var(--color-accent-red); /* Borda vermelha ao passar o mouse */
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.product-name {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    min-width: 150px;
+}
+
+.product-detail {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+}
+
+.detail-separator {
+    margin: 0 0.5rem;
+    color: var(--border-color-dark);
+}
+
+.product-price {
+    color: var(--color-accent-green);
+    font-weight: 500;
+}
+
+/* Botão de Excluir */
+.btn-delete-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--color-accent-red);
+    border: 1px solid var(--color-accent-red);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-delete-action:hover {
+    background-color: var(--color-accent-red);
+    color: white;
+}

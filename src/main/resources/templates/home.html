@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - StockLanches</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}"> 
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+            <div class="logo-container">
+                <i class="fa-solid fa-cart-shopping logo-icon"></i>
+                <div class="logo-text">
+                    <h1>StockLanches</h1>
+                    <p>Gestão de Estoque</p>
+                </div>
+            </div>
+
+            <div class="user-profile-card">
+                <p class="user-profile-label">Usuário Logado</p>
+                <p class="user-profile-email" th:text="${emailUsuario}">gerente@stocklanches.com</p>
+            </div>
+
+			<nav class="menu-nav">
+                <p class="menu-label">Menu Principal</p>
+                
+                <a th:href="@{/home}" class="menu-item" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+                
+                <a th:href="@{/adicionar}" class="menu-item" th:classappend="${activePage == 'adicionar'} ? 'active' : ''">
+                    <i class="fa-solid fa-plus"></i> Adicionar Produto
+                </a>
+
+                <a th:href="@{/editar}" class="menu-item" th:classappend="${activePage == 'editar'} ? 'active' : ''">
+                    <i class="fa-regular fa-pen-to-square"></i> Editar Produto
+                </a>
+                
+                <a th:href="@{/excluir}" class="menu-item" th:classappend="${activePage == 'excluir'} ? 'active' : ''">
+                    <i class="fa-solid fa-trash"></i> Excluir Produto
+                </a>
+
+                <a th:href="@{/consultar}" class="menu-item" th:classappend="${activePage == 'consultar'} ? 'active' : ''">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar Produto
+                </a>
+                
+                <a th:href="@{/historico}" class="menu-item" th:classappend="${activePage == 'historico'} ? 'active' : ''">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                </a>
+
+                <div class="menu-bottom">
+                    <p class="menu-label">Sistema</p>
+                    <a th:href="@{/logout}" class="menu-item btn-logout" 
+                       onclick="return confirm('Tem certeza que deseja sair do sistema?');">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="menu-overlay" onclick="toggleMenu()"></div>
+            
+            <header>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+                    <h1>Dashboard de Estoque</h1>
+                    <p>Visão geral completa do gerenciamento de estoque</p>
+                </div>
+            </header>
+
+            <div class="cards-grid">
+                <div class="kpi-card">
+                    <div>
+                        <small>Total de Produtos</small>
+                        <h2 th:text="${totalProdutos}">0</h2>
+                        <span>Itens registrados</span>
+                    </div>
+                    <div class="card-icon bg-blue"><i class="fa-solid fa-box"></i></div>
+                </div>
+
+                <div class="kpi-card">
+                    <div>
+                        <small>Estoque Baixo</small>
+                        <h2 th:text="${produtosBaixoEstoque}">0</h2>
+                        <span>Abaixo do nível mínimo</span>
+                    </div>
+                    <div class="card-icon bg-orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                </div>
+
+                <div class="kpi-card">
+                    <div>
+                        <small>Valor em Estoque</small>
+                        <h2 th:text="'R$ ' + ${#numbers.formatDecimal(valorTotalEstoque, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</h2>
+                        <span>Custo Total</span>
+                    </div>
+                    <div class="card-icon bg-green"><i class="fa-solid fa-dollar-sign"></i></div>
+                </div>
+
+                <div class="kpi-card">
+                    <div>
+                        <small>Última Atualização</small>
+                        <h2 th:text="${#temporals.format(agora, 'HH:mm')}">00:00</h2>
+                        <span th:text="${#temporals.format(agora, 'dd/MM/yyyy')}">Data</span>
+                    </div>
+                    <div class="card-icon bg-purple"><i class="fa-regular fa-clock"></i></div>
+                </div>
+            </div>
+
+            <input type="hidden" id="data-lanches" th:value="${qtdLanches}">
+            <input type="hidden" id="data-bebidas" th:value="${qtdBebidas}">
+            <input type="hidden" id="data-sobremesas" th:value="${qtdSobremesas}">
+            <input type="hidden" id="data-acomp" th:value="${qtdAcomp}">
+            
+            <input type="hidden" id="data-top5-nomes" th:value="${#strings.listJoin(nomesTop5, ',')}">
+            <input type="hidden" id="data-top5-qtd" th:value="${#strings.listJoin(qtdTop5, ',')}">
+
+
+            <div class="charts-area">
+                <div class="content-box">
+                    <h3 class="section-title" style="border: none; margin-bottom: 0;">
+                        <i class="fa-solid fa-chart-pie"></i> Distribuição por Categoria
+                    </h3>
+                    <div class="chart-canvas-container">
+                        <canvas id="graficoPizza"></canvas>
+                    </div>
+                </div>
+
+                <div class="content-box">
+                    <h3 class="section-title" style="border: none; margin-bottom: 0;">
+                        <i class="fa-solid fa-arrow-trend-down"></i> Menor Estoque
+                    </h3>
+                    <div class="chart-canvas-container">
+                        <canvas id="graficoBarras"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3 class="section-title" style="border: none; color: #f97316; margin-bottom: 5px;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Produtos com Estoque Crítico
+                </h3>
+                
+                <table class="stock-table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Qtd</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(listaProdutos) or produtosBaixoEstoque == 0}">
+                            <td colspan="4" style="text-align: center; color: #94a3b8; padding: 20px;">
+                                Tudo certo! Nenhum produto com estoque crítico.
+                            </td>
+                        </tr>
+
+                        <tr th:each="prod : ${listaProdutos}" th:if="${prod.quantidade <= prod.estoqueMinimo}">
+                            <td th:text="${prod.nome}" style="font-weight: bold;">Nome</td>
+                            <td th:text="${prod.quantidade}">0</td>
+                            <td th:text="${prod.categoria}">Cat</td>
+                            <td><span class="status-badge critical">Crítico</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+
+    <script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>

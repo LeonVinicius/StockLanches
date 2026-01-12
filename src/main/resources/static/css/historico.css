@@ -1,0 +1,163 @@
+
+.filter-bar {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: flex-end; /* Alinha os inputs e o botão pela base */
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.filter-select,
+.filter-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-dark-card);
+    border: 1px solid var(--border-color-dark);
+    border-radius: 10px;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    /* Ícone de calendário padrão do navegador invertido para dark mode */
+    color-scheme: dark;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+    outline: none;
+    border-color: var(--color-accent-purple);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.btn-filter {
+    padding: 0.75rem 2rem;
+    background-color: var(--color-accent-purple); /* Roxo vibrante da imagem */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    height: 46px; /* Altura para alinhar com os inputs */
+}
+
+.btn-filter:hover {
+    background-color: #7c3aed; /* Roxo um pouco mais escuro */
+}
+
+/* Container da Timeline */
+.timeline-container {
+    background-color: var(--bg-dark-card);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid var(--border-color-dark);
+}
+
+/* Lista da Timeline */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+/* Linha vertical da timeline */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px; /* Posição da linha */
+    top: 10px;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--border-color-dark);
+}
+
+/* Item individual da timeline */
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Ícone na linha do tempo (Entrada/Saída) */
+.timeline-icon {
+    position: absolute;
+    left: -2.95rem; /* Ajuste fino para centralizar na linha */
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1; /* Fica acima da linha vertical */
+    background-color: var(--bg-dark-card); /* Borda 'falsa' ao redor do ícone */
+    border: 2px solid var(--bg-dark-card);
+}
+
+.icon-entry {
+    background-color: rgba(16, 185, 129, 0.2); /* Verde transparente */
+    color: var(--color-accent-green);
+}
+
+.icon-exit {
+    background-color: rgba(239, 68, 68, 0.2); /* Vermelho transparente */
+    color: var(--color-accent-red);
+}
+
+/* Cartão de conteúdo da timeline */
+.timeline-content {
+    background-color: var(--bg-dark-main);
+    border: 1px solid var(--border-color-dark);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transaction-info h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.text-entry { color: var(--color-accent-green); }
+.text-exit { color: var(--color-accent-red); }
+
+.transaction-info p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.transaction-meta {
+    text-align: right;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.meta-time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.meta-user {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}

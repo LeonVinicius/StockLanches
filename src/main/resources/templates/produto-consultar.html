@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Produtos - StockLanches</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+            <div class="logo-container">
+                <i class="fa-solid fa-cart-shopping logo-icon"></i>
+                <div class="logo-text">
+                    <h1>StockLanches</h1>
+                    <p>Gestão de Estoque</p>
+                </div>
+            </div>
+
+            <div class="user-profile-card">
+                <p class="user-profile-label">Usuário Logado</p>
+                <p class="user-profile-email" th:text="${emailUsuario}">gerente@stocklanches.com</p>
+            </div>
+
+			<nav class="menu-nav">
+                <p class="menu-label">Menu Principal</p>
+                
+                <a th:href="@{/home}" class="menu-item" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+                <a th:href="@{/adicionar}" class="menu-item" th:classappend="${activePage == 'adicionar'} ? 'active' : ''">
+                    <i class="fa-solid fa-plus"></i> Adicionar Produto
+                </a>
+                <a th:href="@{/editar}" class="menu-item" th:classappend="${activePage == 'editar'} ? 'active' : ''">
+                    <i class="fa-regular fa-pen-to-square"></i> Editar Produto
+                </a>
+                <a th:href="@{/excluir}" class="menu-item" th:classappend="${activePage == 'excluir'} ? 'active' : ''">
+                    <i class="fa-solid fa-trash"></i> Excluir Produto
+                </a>
+                <a th:href="@{/consultar}" class="menu-item" th:classappend="${activePage == 'consultar'} ? 'active' : ''">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar Produto
+                </a>
+                <a th:href="@{/historico}" class="menu-item" th:classappend="${activePage == 'historico'} ? 'active' : ''">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                </a>
+
+                <div class="menu-bottom">
+                    <p class="menu-label">Sistema</p>
+                    <a th:href="@{/logout}" class="menu-item btn-logout" 
+                       onclick="return confirm('Tem certeza que deseja sair do sistema?');">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="menu-overlay" onclick="toggleMenu()"></div>
+            
+            <header>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            	<div>
+                    <h1>Consultar Estoque</h1>
+                    <p>Visualize, filtre e gerencie os produtos cadastrados</p>
+                </div>
+            </header>
+
+            <div class="content-box" style="margin-bottom: 25px;">
+                <h3 class="section-title" style="border: none; margin-bottom: 15px;">
+                    <i class="fa-solid fa-filter"></i> Filtros de Pesquisa
+                </h3>
+                
+                <form method="GET" th:action="@{/consultar}" class="form-row" style="margin-bottom: 0; display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end;">
+                    
+                    <div class="form-group" style="flex-grow: 2; min-width: 250px; margin-bottom: 0;">
+                        <label>Buscar Produto</label>
+                        <div style="position: relative;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 15px; top: 12px; color: #94a3b8;"></i>
+                            <input type="text" name="busca" th:value="${buscaAtual}" placeholder="Nome do produto..." style="padding-left: 40px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="flex-grow: 1; min-width: 150px; margin-bottom: 0;">
+                        <label>Categoria</label>
+                        <select name="categoria">
+                            <option value="Todas">Todas</option>
+                            <option value="Lanches" th:selected="${categoriaAtual == 'Lanches'}">Lanches</option>
+                            <option value="Bebidas" th:selected="${categoriaAtual == 'Bebidas'}">Bebidas</option>
+                            <option value="Acompanhamentos" th:selected="${categoriaAtual == 'Acompanhamentos'}">Acompanhamentos</option>
+                            <option value="Sobremesas" th:selected="${categoriaAtual == 'Sobremesas'}">Sobremesas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="flex-grow: 1; min-width: 150px; margin-bottom: 0;">
+                        <label>Ordenar Por</label>
+                        <select name="ordenar">
+                            <option value="nome_az" th:selected="${ordenacaoAtual == 'nome_az'}">A-Z</option>
+                            <option value="nome_za" th:selected="${ordenacaoAtual == 'nome_za'}">Z-A</option>
+                            <option value="menor_preco" th:selected="${ordenacaoAtual == 'menor_preco'}">Menor Preço</option>
+                            <option value="maior_preco" th:selected="${ordenacaoAtual == 'maior_preco'}">Maior Preço</option>
+                            <option value="quantidade_baixa" th:selected="${ordenacaoAtual == 'quantidade_baixa'}">Estoque Baixo</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="margin-bottom: 0; height: 45px;">
+                        Aplicar Filtros
+                    </button>
+                </form>
+            </div>
+
+            <div class="content-box">
+                <table class="stock-table">
+                    <thead>
+                        <tr>
+                            <th width="50">ID</th>
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Estoque</th>
+                            <th>Preço Venda</th>
+                            <th>Status</th>
+                            <th width="50">Detalhes</th> </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(produtos)}">
+                            <td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">
+                                <i class="fa-regular fa-folder-open" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+                                Nenhum produto encontrado.
+                            </td>
+                        </tr>
+
+                        <tr th:each="produto : ${produtos}">
+                            <td th:text="'#' + ${produto.id}" style="color: #64748b;">#1</td>
+                            
+                            <td style="font-weight: 600; color: #f8fafc;" th:text="${produto.nome}">X-Burger</td>
+                            
+                            <td>
+                                <span style="background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; font-size: 0.85rem;" 
+                                      th:text="${produto.categoria}">Lanches</span>
+                            </td>
+                            
+                            <td th:text="${produto.quantidade} + ' unid.'"
+                                th:style="${produto.quantidade <= produto.estoqueMinimo ? 'color: #f97316; font-weight:bold;' : ''}">
+                                10 unid.
+                            </td>
+                            
+                            <td th:text="'R$ ' + ${#numbers.formatDecimal(produto.precoVenda, 1, 'POINT', 2, 'COMMA')}">R$ 25,00</td>
+                            
+                            <td>
+                                <span class="status-badge"
+                                      th:classappend="${produto.status == 'Normal'} ? 'bg-green' : 
+                                                      (${produto.status == 'Baixo'} ? 'bg-orange' : 'critical')"
+                                      style="color: white; padding: 5px 10px;"
+                                      th:text="${produto.status}">
+                                    Normal
+                                </span>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <button type="button" 
+                                        style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;"
+                                        th:onclick="abrirModalDetalhes(
+                                            [[${produto.nome}]], 
+                                            [[${produto.categoria}]], 
+                                            [[${produto.precoCusto}]], 
+                                            [[${produto.fornecedor}]], 
+                                            [[${produto.descricao}]]
+                                        )">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="modalDetalhes" class="modal-overlay-details" onclick="fecharModalDetalhes(event)">
+                <div class="modal-box">
+                    
+                    <div class="modal-header">
+                        <h3><i class="fa-solid fa-circle-info" style="color: var(--color-accent-blue);"></i> Detalhes do Produto</h3>
+                        <button class="btn-close-modal" onclick="fecharModalDetalhes(event)">×</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="detail-row">
+                            <span class="detail-label">Produto:</span>
+                            <span class="detail-value" id="m-nome">Nome do Produto</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Categoria:</span>
+                            <span class="detail-value" id="m-categoria">Lanches</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Preço de Custo:</span>
+                            <span class="detail-value" id="m-custo">R$ 0,00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Fornecedor:</span>
+                            <span class="detail-value" id="m-fornecedor">Não informado</span>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <span class="detail-label" style="display: block; margin-bottom: 5px;">Descrição:</span>
+                            <p id="m-descricao" style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; font-size: 0.9rem; color: #ccc; margin: 0;">
+                                Sem descrição.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn-submit" onclick="fecharModalDetalhes(event)" style="background-color: var(--bg-dark-main); border: 1px solid var(--border-color-dark);">
+                            Voltar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div> <script th:src="@{/js/sidebar.js}"></script>
+
+ <script th:src="@{/js/modal-detalhes.js}"></script>
+</body>
+</html>

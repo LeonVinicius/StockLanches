@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Produto - StockLanches</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}"> 
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+            <div class="logo-container">
+                <i class="fa-solid fa-cart-shopping logo-icon"></i>
+                <div class="logo-text">
+                    <h1>StockLanches</h1>
+                    <p>Gestão de Estoque</p>
+                </div>
+            </div>
+
+            <div class="user-profile-card">
+                <p class="user-profile-label">Usuário Logado</p>
+                <p class="user-profile-email" th:text="${emailUsuario}">gerente@stocklanches.com</p>
+            </div>
+
+			<nav class="menu-nav">
+                <p class="menu-label">Menu Principal</p>
+                
+                <a th:href="@{/home}" class="menu-item" th:classappend="${activePage == 'dashboard'} ? 'active' : ''">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+                
+                <a th:href="@{/adicionar}" class="menu-item" th:classappend="${activePage == 'adicionar'} ? 'active' : ''">
+                    <i class="fa-solid fa-plus"></i> Adicionar Produto
+                </a>
+
+                <a th:href="@{/editar}" class="menu-item" th:classappend="${activePage == 'editar'} ? 'active' : ''">
+                    <i class="fa-regular fa-pen-to-square"></i> Editar Produto
+                </a>
+                
+                <a th:href="@{/excluir}" class="menu-item" th:classappend="${activePage == 'excluir'} ? 'active' : ''">
+                    <i class="fa-solid fa-trash"></i> Excluir Produto
+                </a>
+
+                <a th:href="@{/consultar}" class="menu-item" th:classappend="${activePage == 'consultar'} ? 'active' : ''">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar Produto
+                </a>
+                
+                <a th:href="@{/historico}" class="menu-item" th:classappend="${activePage == 'historico'} ? 'active' : ''">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                </a>
+
+                <div class="menu-bottom">
+                    <p class="menu-label">Sistema</p>
+                    <a th:href="@{/logout}" class="menu-item btn-logout" 
+                       onclick="return confirm('Tem certeza que deseja sair do sistema?');">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="menu-overlay" onclick="toggleMenu()"></div>
+            
+            <header>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+                    <h1>Adicionar Produto</h1>
+                    <p>Cadastre um novo produto no estoque</p>
+                </div>
+            </header>
+
+            <div class="form-container">
+                <form method="POST" th:action="@{/adicionar}">
+                    
+                    <div th:if="${mensagemSucesso}" style="padding: 1rem; background-color: rgba(34, 197, 94, 0.2); color: #22c55e; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid rgba(34, 197, 94, 0.3);">
+                        <i class="fa-solid fa-check-circle"></i> <span th:text="${mensagemSucesso}"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Nome do Produto</label>
+                            <input type="text" id="nome" name="nome" placeholder="Ex: X-Burger Completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoria</label>
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Selecione uma categoria</option>
+                                <option value="Lanches">Lanches</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Acompanhamentos">Acompanhamentos</option>
+                                <option value="Sobremesas">Sobremesas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <div class="form-group">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" id="quantidade" name="quantidade" placeholder="0" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="precoCusto">Preço Custo (R$)</label>
+                            <input type="number" id="precoCusto" name="precoCusto" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="precoVenda">Preço Venda (R$)</label>
+                            <input type="number" id="precoVenda" name="precoVenda" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" name="descricao" placeholder="Detalhes sobre o produto..." rows="4" 
+                                  style="width: 100%; padding: 10px; background-color: var(--bg-dark-main); border: 1px solid var(--border-color-dark); border-radius: 6px; color: white; font-size: 0.95rem;"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="estoqueMinimo">Estoque Mínimo</label>
+                            <input type="number" id="estoqueMinimo" name="estoqueMinimo" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="fornecedor">Fornecedor</label>
+                            <input type="text" id="fornecedor" name="fornecedor" placeholder="Nome do fornecedor">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; display: flex; gap: 15px;">
+                        <button type="submit" class="btn-submit">
+                            <i class="fa-solid fa-plus"></i> Cadastrar Produto
+                        </button>
+                        <a th:href="@{/home}" style="padding: 12px 24px; border: 1px solid var(--border-color-dark); border-radius: 6px; text-decoration: none; color: var(--color-text-secondary); font-weight: bold;">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>
