@@ -12,9 +12,27 @@ Confira abaixo as principais telas do sistema (Autenticação, Gestão de Produt
 
 
 <p align="center">
-  <img src="https://private-user-images.githubusercontent.com/147005024/534757723-a2e44f52-a0a5-41f0-b6d4-cf3d7a0da020.PNG?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjgyNDk2MTEsIm5iZiI6MTc2ODI0OTMxMSwicGF0aCI6Ii8xNDcwMDUwMjQvNTM0NzU3NzIzLWEyZTQ0ZjUyLWEwYTUtNDFmMC1iNmQ0LWNmM2Q3YTBkYTAyMC5QTkc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTEyJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDExMlQyMDIxNTFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT04YTA3ODAwNGI2M2E4NWNkMTVlNjYyNjgzYWIxOGRkNmQwN2Y1NDM2ZDgxY2Y4NjRjN2MzYmY0MzA0MDBmZmIxJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.PSN4HRKeV-E92efkXOXk9hyloQPIdLrVey4Xwt40Po8" width="45%" />
-  <img src="https://private-user-images.githubusercontent.com/147005024/534757724-34e1c8c5-7d69-4526-878b-cf49ae80c276.PNG?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjgyNDk2MTEsIm5iZiI6MTc2ODI0OTMxMSwicGF0aCI6Ii8xNDcwMDUwMjQvNTM0NzU3NzI0LTM0ZTFjOGM1LTdkNjktNDUyNi04NzhiLWNmNDlhZTgwYzI3Ni5QTkc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTEyJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDExMlQyMDIxNTFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kYTIwY2ZmZjQzNjZjYzUxOTg2OGI3MWE4NDY5NjlmMDQ5ZGQxYTMxMmE3YjQ5NWVhMmI1ODFiNGM1OGVlY2RkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.mJIM9q7MKnlNXN71pqE1aOK5vXH6Zj5z4LPv87FXMeA" width="45%" />
+  <img 
+    src="https://raw.githubusercontent.com/LeonVinicius/StockLanches/main/assets/tela_login.png" 
+    width="45%" 
+  />
+  <img 
+    src="https://raw.githubusercontent.com/LeonVinicius/StockLanches/main/assets/tela_dashboard.png" 
+    width="45%" 
+  />
 </p>
+
+<p align="center">
+  <img 
+    src="https://raw.githubusercontent.com/LeonVinicius/StockLanches/main/assets/tela_cadastro.png" 
+    width="45%" 
+  />
+  <img 
+    src="https://raw.githubusercontent.com/LeonVinicius/StockLanches/main/assets/tela_historico.png" 
+    width="45%" 
+  />
+</p>
+>
 
 ---
 
